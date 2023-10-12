@@ -1,0 +1,96 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');
+:root{
+    --fontcolor:rgb(65, 65, 65);
+}
+*{
+    padding: 0;
+    margin: 0;
+    color: black;
+    font-family: 'Lora', serif;
+}
+
+
+
+
+
+
+/* <<<<<<<<<<<Body>>>>>>>>>>> */
+
+
+
+
+
+
+/* <<<<<<<<<<<<<<<<<downside>>>>>>>>>>>>> */
+
+
+.downside{
+    position: relative;
+    display: flex;
+    width: 70%;
+    margin-inline: auto;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+
+h2{
+    font-weight: 400;
+    padding: 1rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+
+.posts{
+    font-weight: 300;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: space-evenly;
+    margin-right: 1rem;
+}
+
+
+.searchpagebtn{
+    color: rgb(114, 114, 114);
+    text-decoration: none;
+    font-size:medium;
+    position: relative;
+    top: 2rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.cates{
+    display: flex;
+    flex-direction: row;
+}
+
+.catePart{
+    position: sticky;
+    top: 5rem; 
+    /* margin-left: 5rem; */
+}
+
+
+
+
+
+
+@media (max-width:988px) {
+    .heroimage{
+        display: none;
+    }
+    .navlist{
+        display: none;
+    }
+    .downside{
+        flex-direction: column-reverse;
+
+    }
+}
+
+
+

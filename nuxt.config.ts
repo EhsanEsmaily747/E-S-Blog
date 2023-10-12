@@ -1,0 +1,23 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  
+  devtools: { enabled: true },
+  modules:
+    [
+      'nuxt-icon',
+      '@nuxtjs/supabase'
+    ],
+    runtimeConfig:{
+      mongodbUri:process.env.MONGODB_URI
+    }
+    ,
+    supabase:{
+      
+      redirect:false,
+      
+    
+    }
+})
+
+
+
