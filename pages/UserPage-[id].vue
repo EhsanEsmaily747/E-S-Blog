@@ -16,26 +16,29 @@ userInfo.value = toRaw(user.data.value[0])
 </script>
 
 <template>
-    <NavBar></NavBar>
-    <div class="container">
-        <div class="content">
-            <div class="">
-                <img :src="userInfo.picture" class="Ppic" alt="">
+    <div>
 
-            </div>
-            
-            <h2 class="name">{{ userInfo.username }}</h2>
-            <p class="email">{{ userInfo.email }}</p>
-            <div class="posts">
-                <Post v-for="post in posts" :post="post"></Post>
+        <NavBar></NavBar>
+        <div class="container">
+            <div class="content">
+                <div class="">
+                    <img :src="userInfo.picture" class="Ppic" alt="">
+    
+                </div>
                 
-                
-                
-                
+                <h2 class="name">{{ userInfo.username }}</h2>
+                <p class="email">{{ userInfo.email }}</p>
+                <div class="posts">
+                    <Post v-for="post in posts" :post="post"></Post>
+                    
+                    
+                    
+                    
+                </div>
             </div>
         </div>
+        <Footer></Footer>
     </div>
-    <Footer></Footer>
 </template>
 
 

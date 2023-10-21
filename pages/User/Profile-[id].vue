@@ -67,38 +67,41 @@ const post = {
 </script>
 
 <template>
-    <UserNav :id="userInfo._id" />
-    <div class="container">
+    <div>
 
-        <div class="content">
-            <div class="Profile-Container">
-                <div class="editInfo">
-                    <Icon class="icon" name='mdi:account-edit-outline' @click="showEditModal = true" />
+        <UserNav :id="userInfo._id" />
+        <div class="container">
+    
+            <div class="content">
+                <div class="Profile-Container">
+                    <div class="editInfo">
+                        <Icon class="icon" name='mdi:account-edit-outline' @click="showEditModal = true" />
+                    </div>
+                    <img :src="userInfo.picture" class="Ppic" alt="">
+    
+                    <div class="editpost">
+                        <Icon class="icon" name="material-symbols:edit-outline" @click="navigateTo(`/User/EditPost-${userInfo._id}`)"/>
+                    </div>
                 </div>
-                <img :src="userInfo.picture" class="Ppic" alt="">
-
-                <div class="editpost">
-                    <Icon class="icon" name="material-symbols:edit-outline" @click="navigateTo(`/User/EditPost-${userInfo._id}`)"/>
+                <transition name="fade">
+                    <EditModal :datas="userInfo" v-if="showEditModal" @refresh-data="refresh" @close-modal="handleModal">
+                    </EditModal>
+    
+                </transition>
+    
+                <h2 class="name">{{ userInfo.username }}</h2>
+                <p class="email">{{ userInfo.email }}</p>
+                <div class="posts">
+                    <Post v-for="post in posts" :post="post"></Post>
+    
+    
+    
+    
                 </div>
-            </div>
-            <transition name="fade">
-                <EditModal :datas="userInfo" v-if="showEditModal" @refresh-data="refresh" @close-modal="handleModal">
-                </EditModal>
-
-            </transition>
-
-            <h2 class="name">{{ userInfo.username }}</h2>
-            <p class="email">{{ userInfo.email }}</p>
-            <div class="posts">
-                <Post v-for="post in posts" :post="post"></Post>
-
-
-
-
             </div>
         </div>
+        <Footer></Footer>
     </div>
-    <Footer></Footer>
 </template>
 
 <style src="../../assets/transition.css"></style>

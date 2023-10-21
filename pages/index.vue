@@ -45,53 +45,57 @@ const data=await useFetch('/api/categories/category')
 
 
 <template>
-    <NavBar 
-    
-    @open-sign="signupopener()" 
-    @open-login="loginopener()" ></NavBar>
-    
-    <transition name="fade">
-        <Login v-show="showLogin" @close-modal="showLogin=false" @open-register="signupopener()"/>
-    
-    </transition>
-    <transition name="fade">
-        <Signup v-show="showSign" @close-modal="showSign=false" @open-login="loginopener()"/>
-    
-    </transition>
-        
-    
+    <div>
         
 
-    <Hero></Hero>
-    <div class="downside">
-        <div class="postPart" >
-            <h2>Most View :</h2>
-            <div class="posts">
-                <!-- <Post :post="post"></Post>
-                <Post :post="post"></Post>
-                <Post :post="post"></Post>
-                <Post :post="post"></Post>
-                <Post :post="post"></Post>
-                <Post :post="post"></Post>
-                <Post :post="post"></Post> -->
-                
-            </div>
-
-        </div>
-        <div style="position: sticky; top: 5rem;">
+            <NavBar 
             
-            <div class="catePart">
-                <h2>Categories :</h2>
+                @open-sign="signupopener()" 
+                @open-login="loginopener()" >
+            
+            </NavBar>
+            
+            <transition name="fade">
+                <Login v-show="showLogin" @close-modal="showLogin=false" @open-register="signupopener()"/>
+            </transition>
+            <transition name="fade">
+                <Signup v-show="showSign" @close-modal="showSign=false" @open-login="loginopener()"/>
+            </transition>
                 
-                <div class="cates" style="justify-content: flex-start;">
-                    <Category v-for="cat in cats" :cat="cat"/>
+            
+                
+        
+            <Hero></Hero>
+            <div class="downside">
+                <div class="postPart" >
+                    <h2>Most View :</h2>
+                    <div class="posts">
+                        <!-- <Post :post="post"></Post>
+                        <Post :post="post"></Post>
+                        <Post :post="post"></Post>
+                        <Post :post="post"></Post>
+                        <Post :post="post"></Post>
+                        <Post :post="post"></Post>
+                        <Post :post="post"></Post> -->
+                        
+                    </div>
+        
                 </div>
-                
-                <NuxtLink class="searchpagebtn" to="/SearchPage">Search More ...</NuxtLink >
-             </div>
-        </div>
+                <div style="position: sticky; top: 5rem;">
+                    
+                    <div class="catePart">
+                        <h2>Categories :</h2>
+                        
+                        <div class="cates" style="justify-content: flex-start;">
+                            <Category v-for="cat in cats" :cat="cat"/>
+                        </div>
+                        <NuxtLink class="searchpagebtn" to="/SearchPage">Search More ...</NuxtLink >
+                     </div>
+                </div>
+            </div>
+            <Footer/>
+        
     </div>
-    <Footer/>
 </template>
 
 

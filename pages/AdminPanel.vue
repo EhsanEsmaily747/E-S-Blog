@@ -37,49 +37,52 @@
 
 </script>
 <template>
+    <div>
 
-    <AdminNav/>
-<div class="container">
-    <div class="info">
-        <div class="boxInfo">
-            <Icon class="infoIcons" name="material-symbols:person-rounded"/>
-            <p>123</p>
-        </div>
-        <div class="boxInfo">
-            <Icon class="infoIcons" name="material-symbols:post-add"/>
-            <p>123</p>
-        </div>
-    </div>
-    <div class="boxes">
-            <div class="box"  @click="navigateTo('/Manage/Users')">
-                <Icon class="icon" name="material-symbols:manage-accounts-outline-rounded"/>
-                Manage Users</div>
-            <div class="box"  @click="navigateTo('/Manage/Posts')">
-                <Icon class="icon" name="material-symbols:folder-managed-outline-rounded"/>
-                Manage Posts</div>
-            <div class="box"  @click="navigateTo('/User/EditPost')">
-                <Icon class="icon" name="material-symbols:add-box-outline-rounded"/>
-                Create Posts</div>
-        </div>
-    
-    <div class="cats">
-        <Category v-for="cat in cats" :cat="cat"  @removeCat="handCategory"/>
         
-        <Icon class="add" name="material-symbols:add" @click="showModal=!showModal"/>
-
-        <div class="modal" v-if="showModal">
-            <Icon class="cross" @click="showModal=false" name="gridicons:cross-small"/>
-            <p>Name:</p>
-            <input type="text" v-model="newCat">
-            <div>
-                <button class="addBtn" @click="AddCategory">Add</button>
+            <AdminNav/>
+        <div class="container">
+            <div class="info">
+                <div class="boxInfo">
+                    <Icon class="infoIcons" name="material-symbols:person-rounded"/>
+                    <p>123</p>
+                </div>
+                <div class="boxInfo">
+                    <Icon class="infoIcons" name="material-symbols:post-add"/>
+                    <p>123</p>
+                </div>
+            </div>
+            <div class="boxes">
+                    <div class="box"  @click="navigateTo('/Manage/Users')">
+                        <Icon class="icon" name="material-symbols:manage-accounts-outline-rounded"/>
+                        Manage Users</div>
+                    <div class="box"  @click="navigateTo('/Manage/Posts')">
+                        <Icon class="icon" name="material-symbols:folder-managed-outline-rounded"/>
+                        Manage Posts</div>
+                    <div class="box"  @click="navigateTo('/User/EditPost')">
+                        <Icon class="icon" name="material-symbols:add-box-outline-rounded"/>
+                        Create Posts</div>
+                </div>
+            
+            <div class="cats">
+                <Category v-for="cat in cats" :cat="cat"  @removeCat="handCategory"/>
+                
+                <Icon class="add" name="material-symbols:add" @click="showModal=!showModal"/>
+        
+                <div class="modal" v-if="showModal">
+                    <Icon class="cross" @click="showModal=false" name="gridicons:cross-small"/>
+                    <p>Name:</p>
+                    <input type="text" v-model="newCat">
+                    <div>
+                        <button class="addBtn" @click="AddCategory">Add</button>
+                    </div>
+                
+                </div>
+            </div>
             </div>
         
-        </div>
+        <Footer/>
     </div>
-    </div>
-
-<Footer/>
 </template>
 
 <style scoped>
