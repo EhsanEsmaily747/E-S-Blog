@@ -1,7 +1,8 @@
 {
     "nuxt.isNuxtApp": false,
     "cSpell.words": [
-        "Nuxt"
+        "Nuxt",
+        "sidebase"
     ],
     "vue.codeActions.enabled": false
 }

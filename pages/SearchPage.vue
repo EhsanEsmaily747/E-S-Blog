@@ -1,4 +1,8 @@
 <script setup>
+const { status, getSession } = useAuth()
+const userData = await getSession()
+
+
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 const data = await useFetch('/api/categories/category')
@@ -11,8 +15,9 @@ let cats = ref(toRaw(data.data.value.cats))
 
 <template>
     <div>
-
-        <NavBar @open-sign="signupopener()" @open-login="loginopener()"></NavBar>
+        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
+        <UserNav v-else-if="userData.user.name.isAdmin=='false'" :id="userData.user.name.id"></UserNav>
+        <AdminNav v-else />
 
         <transition name="fade">
             <Login v-show="showLogin" @close-modal="showLogin = false" @open-register="signupopener()" />
@@ -36,7 +41,6 @@ let cats = ref(toRaw(data.data.value.cats))
         </div>
         <Footer />
     </div>
-
 </template>
 
 <style src="../assets/transition.css"></style>

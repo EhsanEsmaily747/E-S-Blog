@@ -1,6 +1,13 @@
 
 <script setup>
-    
+
+     definePageMeta({
+        middleware:'auth'
+    })
+    const {getSession}=useAuth()
+    const dataSession=await getSession()
+
+
     const route=useRoute()
 
     let userInfo = ref({})
@@ -17,8 +24,8 @@ userInfo.value = toRaw(user.data.value[0])
 
 <template>
     <div>
-
-        <NavBar></NavBar>
+        <AdminNav v-if="dataSession.user.name.isAdmin=='true'"></AdminNav>
+        <UserNav v-else :id="dataSession.user.name.id"></UserNav>
         <div class="container">
             <div class="content">
                 <div class="">

@@ -64,10 +64,9 @@
     border-bottom:solid 2px gray ;
     background:transparent;
     outline: none;
-    padding: 8px;
+    padding: 4px;
     z-index: 20;
-    margin: 5px;
-    /* font-size: large; */
+    margin: 12px;
     font-weight: 600;
 }
 .input:focus{

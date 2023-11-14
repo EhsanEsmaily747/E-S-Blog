@@ -7,8 +7,12 @@ export default defineNuxtConfig({
   modules:
     [
       'nuxt-icon',
-      '@nuxtjs/supabase'
+      '@nuxtjs/supabase',
+      '@vueuse/nuxt',
+      '@sidebase/nuxt-auth'
+
     ],
+
     runtimeConfig:{
       mongodbUri:process.env.MONGODB_URI
     }

@@ -40,8 +40,15 @@ header{
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+}
+.logOut{
+    margin-top: 4px;
+    margin-left: 10px;
+}
 .navItem::after{
     content: '';
     position: absolute;

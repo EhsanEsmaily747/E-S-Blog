@@ -1,5 +1,8 @@
 <script setup>
-    
+    const {signOut}=useAuth
+    const props=defineProps({
+        id:String,
+    })
 </script>
 
 <template>
@@ -11,9 +14,10 @@
 
             <NuxtLink class="navItem" to="/">Home</NuxtLink >
             <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink >
+            
             <NuxtLink class="navItem" @click="$emit('open-login')">Sign In</NuxtLink>
         </ul>
-        <CustomBtn text="Get Started" @click="$emit('open-sign')"></CustomBtn>
+        <CustomBtn  text="Get Started" @click="$emit('open-sign')"></CustomBtn>
         </div>
     </div>
     </header>

@@ -1,29 +1,40 @@
 <script setup>
 
-    const loginInfo=ref({
-        username:'',
-        password:''
-    })
+    const { signIn } =useAuth()
+    
+    const userUsername=ref('')
+    const userPassword=ref('')
 
-    const handleLogin=async(event)=>{
+    const LoginUser=async(event)=>{
         event.preventDefault();
+        const password=userPassword.value
+        const username=userUsername.value
+        
         let data={}
         
-        const user=await useFetch(`/api/users/user?username=${loginInfo.value.username}`)
+        const user=await useFetch(`/api/users/user?username=${username}`)
         // console.log(user);
         if(typeof user.data.value[0]==='string'){
-            alert('User Does Not Exist')
+            alert('User Does not exist')
         }else if (user) {
             data=toRaw(user.data.value[0])
-            // console.log( data);
-            if (data.password==loginInfo.value.password) {
-                navigateTo(`/User/Profile-${data._id}`)
+            
+            if (data.password==password) {
+                const id=data._id
+                const isAdmin=data.isAdmin
+                await signIn('credentials',{id, isAdmin,redirect:false} )
+                
+                if (data.isAdmin) {
+                    navigateTo(`/AdminPanel`)
+                }else{
+                    navigateTo(`/User/Profile-${data._id}`)
+                }
+
             }else{
                 alert('Wrong Password')
             }
         }
         }
-
 
 </script>
 
@@ -32,26 +43,27 @@
 
 
      <div class="ModalContainer" >
-        <form class="ModalForm">
+        <form class="ModalForm" >
             <Icon name="material-symbols:close" class="closeModal" @click="$emit('close-modal')" ></Icon>
             <h2 class="Login-title">Login</h2>
             
             <div class="input-field">
-                <input class="input" type="text" v-model="loginInfo.username" required><label for="Email">Username</label><span class="icon"><Icon name="material-symbols:person-rounded"/></span>
+                <input class="input" type="text" v-model="userUsername" required><label for="Email">Username</label><span class="icon"><Icon name="material-symbols:person-rounded"/></span>
+    
             </div>
 
             <div class="input-field">
-                <input class="input" type="password" v-model="loginInfo.password" required><label for="password">Password</label><span class="icon"><Icon name="material-symbols:lock"/></span>
+                <input class="input" type="password" v-model="userPassword" required><label for="password">Password</label><span class="icon"><Icon name="material-symbols:lock"/></span>
             </div>
 
-            <div class="remember">
+            <!-- <div class="remember">
                 <div class="checkbox">
                     <input type="checkbox"><label for="checkbox">Remember me</label>
                 </div>
                 <a href="" class="forgot-pass">Forgot Password ?</a>
-            </div>
+            </div> -->
 
-                <button class="login-btn" @click="handleLogin">Login</button>
+                <button class="login-btn" @click="LoginUser">Login</button>
             <div class="register-part">
                 <label for="">Don't have an account?</label><span  @click="$emit('open-register')">Register</span>
             </div>

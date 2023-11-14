@@ -7,19 +7,17 @@ export default defineEventHandler(async( event)=>{
 
     if(query.id)filter._id=query.id
     if(query.username)filter.username=query.username
+    if(query.email)filter.email=query.email
     
 
-    console.log(filter);
+    // console.log(filter);
     const user=await User.find(filter)
+    // console.log(user);
     if(user.length!=0){
         return user
         
     }
     return 'User Not Found'
 
-    // const users=await User.find()
-    // return{
-    //     users
-    // }
 
 })

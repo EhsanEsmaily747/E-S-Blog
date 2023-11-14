@@ -1,4 +1,8 @@
 <script setup>
+     definePageMeta({
+        middleware:'auth'
+    })
+
     const post={
         pProfile:"/man.jpg",
         pWriter:"Brad Hussey",

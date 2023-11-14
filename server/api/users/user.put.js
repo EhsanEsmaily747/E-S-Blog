@@ -9,7 +9,7 @@ console.log(query);
     try{
         const user= await User.findById(query.id)
         if(!user){
-            console.log(user);
+            // console.log(user);
           return `User Doesn't Exist`
         }
         user.username=updatedUser.username;

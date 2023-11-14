@@ -1,11 +1,16 @@
 <script setup>
-const route=useRoute()
+
+
+
+const { status, getSession } = useAuth()
+const dataSession = await getSession()
+const route = useRoute()
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
-const data=await useFetch(`/api/posts/post?id=${route.params.id}`)
+const data = await useFetch(`/api/posts/post?id=${route.params.id}`)
 
 
-const post=toRaw(data.data.value).posts[0]
+const post = toRaw(data.data.value).posts[0]
 
 // console.log(post.author.username);
 
@@ -17,7 +22,7 @@ const info = ref({
 const like = ref(false)
 const showCmt = ref(false)
 
-const liked = async() => {
+const liked = async () => {
     if (like.value) {
         info.value.likes--
         like.value = false
@@ -93,57 +98,60 @@ const HandleComment = (data) => {
 <template>
     <div>
 
-        <NavBar @open-sign="signupopener()" @open-login="loginopener()"></NavBar>
-    
+        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
+        <UserNav v-else-if="getSession.user.name.isAdmin=='false'" :id="getSession.user.name.id"/>
+        <AdminNav v-else />
+
         <transition name="fade">
             <Login v-show="showLogin" @close-modal="showLogin = false" @open-register="signupopener()" />
-    
+
         </transition>
         <transition name="fade">
             <Signup v-show="showSign" @close-modal="showSign = false" @open-login="loginopener()" />
-    
+
         </transition>
-    
+
         <div class="container">
             <h2 class="postTitle">{{ post.title }}</h2>
-    
+
             <div class="writerinfo">
                 <img :src="post.author.picture" class="pimage" alt="">
                 <p class="user" @click="navigateTo(`/UserPage-${post.author._id}`)">{{ post.author.username }}</p>
             </div>
-    
+
             <div class="postImage">
                 <img :src="post.picture" alt="">
                 <div class="icons">
                     <ul>
                         <li>
-                            <Icon class="icon" @click="liked" :name="!like ? 'mdi:like-outline' : 'mdi:like'" />{{ info.likes }}
+                            <Icon class="icon" @click="liked" :name="!like ? 'mdi:like-outline' : 'mdi:like'" />{{
+                                info.likes }}
                         </li>
                         <li>
                             <Icon class="icon" @click="showComments" name="memory:message" />{{ info.comments }}
                         </li>
-    
+
                     </ul>
                 </div>
             </div>
-    
-    
+
+
             <div v-if="showCmt" style="
             margin-bottom: 1rem;
             ">
                 <section class="comment">
-    
+
                     <Comment v-for="cmt in comments" :data="cmt" @deleteCmt="HandleComment" />
-    
+
                 </section>
                 <div class="input">
                     <input class="textInput" type="text" v-model="comment">
                     <Icon class="sendIcon" @click="addComment" name="lucide:send" />
                 </div>
             </div>
-    
-            <PostText :text="post.content" :subTitle="post.subTitle"/>
-    
+
+            <PostText :text="post.content" :subTitle="post.subTitle" />
+
         </div>
     </div>
 

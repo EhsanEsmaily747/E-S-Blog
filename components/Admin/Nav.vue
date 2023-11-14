@@ -1,3 +1,6 @@
+<script setup>
+    const{signOut}=useAuth()
+</script>
 <template>
     <header>
         <div class="navbar flex">
@@ -7,10 +10,9 @@
 
             <NuxtLink class="navItem" to="/AdminPanel">Admin Panel</NuxtLink>
             <NuxtLink class="navItem" to="/">Home</NuxtLink >
-            <!-- <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink > -->
-            <NuxtLink class="navItem" to="/">Log Out</NuxtLink>
+            <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink >
+            <NuxtLink class="navItem" @click="signOut({redirect:false})" to="/">Log Out <span><Icon class="logOut" name="material-symbols-light:logout"/></span></NuxtLink>
         </ul>
-        <!-- <CustomBtn text="Get Started" @click="$emit('open-sign')"></CustomBtn> -->
         </div>
     </div>
     </header>

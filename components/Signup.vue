@@ -53,11 +53,11 @@
                 <input class="input" type="password" v-model="User.password" required><label for="password">Password</label><span class="icon"><Icon name="material-symbols:lock"/></span>
             </div>
 
-            <div class="remember">
+            <!-- <div class="remember">
                 <div class="checkbox">
                     <input type="checkbox"><label for="checkbox" required>Accept the Terms & Conditions</label>
                 </div>
-                </div>
+                </div> -->
 
                 <button class="login-btn" @click="HandleRegister">Register</button>
             <div class="register-part">

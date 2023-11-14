@@ -1,4 +1,5 @@
 <script setup>
+    const {signOut}=useAuth()
     const props=defineProps({
         id:String
     })
@@ -14,7 +15,7 @@
             <NuxtLink class="navItem" to="/">Home</NuxtLink >
             <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink >
             <p class="navItem" @click="navigateTo(`/User/Profile-${id}`)">Profile</p>
-            <NuxtLink class="navItem" to="/">Log Out</NuxtLink>
+            <NuxtLink class="navItem" to="/" @click="signOut({redirect:false})">Log Out <span><Icon class="logOut" name="material-symbols-light:logout"/></span></NuxtLink>
         </ul>
         <!-- <CustomBtn text="Get Started" @click="$emit('open-sign')"></CustomBtn> -->
         </div>

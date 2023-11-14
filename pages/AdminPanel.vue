@@ -1,4 +1,10 @@
 <script setup>
+    const{getSession}=useAuth()
+    const dataSession=await getSession()
+definePageMeta({
+        middleware:'auth'
+    })
+    
     const data=await useFetch('/api/categories/category')
     let cats=ref(toRaw(data.data.value.cats))
    
@@ -59,7 +65,7 @@
                     <div class="box"  @click="navigateTo('/Manage/Posts')">
                         <Icon class="icon" name="material-symbols:folder-managed-outline-rounded"/>
                         Manage Posts</div>
-                    <div class="box"  @click="navigateTo('/User/EditPost')">
+                    <div class="box"  @click="navigateTo(`/User/EditPost-${dataSession.user.name.id}`)">
                         <Icon class="icon" name="material-symbols:add-box-outline-rounded"/>
                         Create Posts</div>
                 </div>
