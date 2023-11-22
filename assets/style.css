@@ -21,7 +21,6 @@
 
 
 
-
 /* <<<<<<<<<<<<<<<<<downside>>>>>>>>>>>>> */
 
 
@@ -44,6 +43,7 @@ h2{
 
 
 .posts{
+    width: 50%;
     font-weight: 300;
     display: flex;
     flex-direction: row;
@@ -66,12 +66,12 @@ h2{
 .cates{
     display: flex;
     flex-direction: row;
+    width: 50vh;
 }
 
 .catePart{
     position: sticky;
     top: 5rem; 
-    /* margin-left: 5rem; */
 }
 
 
@@ -89,6 +89,10 @@ h2{
     .downside{
         flex-direction: column-reverse;
 
+    }
+    .catePart{
+        position: relative;
+        top: 0;
     }
 }
 

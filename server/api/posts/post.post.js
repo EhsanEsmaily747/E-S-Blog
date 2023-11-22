@@ -1,8 +1,6 @@
 import Post from "~/server/models/post";
 
 export default defineEventHandler(async(event)=>{
-    // const {newuser}=await readBody(event)
-    // const { username, email, password, isAdmin }=newuser
 
 
     const {newPost}=await readBody(event)
@@ -15,7 +13,7 @@ export default defineEventHandler(async(event)=>{
                 title: title,
                 content: content,
                 subtitle:subtitle,
-                likes: 0,
+                likes: [],
                 picture: picture,
                 author: author,
                 category: category,

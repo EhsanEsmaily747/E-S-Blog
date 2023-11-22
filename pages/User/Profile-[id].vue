@@ -10,7 +10,7 @@ let userInfo = ref({})
 
 const data=await useFetch(`/api/posts/post?name=${route.params.id}`)
 const posts=ref(toRaw(data.data.value.posts))
-
+console.log(posts);
 
 const user = await useFetch(`/api/users/user?id=${route.params.id}`)
 userInfo.value = toRaw(user.data.value[0])
@@ -132,10 +132,12 @@ const refresh = (user) => {
 
 
 .posts {
+    width: 70vw;
     margin-top: 3rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     text-align: left;
+    /* background: #000; */
 }
 </style>

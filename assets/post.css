@@ -1,4 +1,11 @@
 .post{
+    /* From https://css.glass */
+/* background: rgba(255, 255, 255, 0.11);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+border: 1px solid rgba(255, 255, 255, 0.33); */
     width: 420px;
     position: relative;
     box-shadow: 0 3px 3px gray;
@@ -18,8 +25,10 @@
 
 
 .postbody{
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     
 }
 .delete{
@@ -30,42 +39,25 @@
     cursor: pointer;
 }
 
-/* 
-.flexpro{
-    display: flex;
-    align-items: center;
-    margin-bottom: .1em; */
-/* }
-.author{
-    font-size: small;
-    font-weight: 300;
-} */
 
 .title{
+    box-sizing: border-box;
      font-weight: bold;
      font-size: 1rem;
      margin-block: .2rem;
+     overflow-y:hidden;
 }
 .desc{
+    box-sizing: border-box;
     font-size: 14px;
     color: rgb(32, 32, 32);
     height: 50px;
-    /* white-space: unset; */
     overflow: hidden;
-    /* text-overflow: clip; */
-
 }
 
-/* .postprofile{
-    margin-left: 0;
-    width: 30px;
-    margin-right: 1em;
-    border-radius: 1.5rem;
-    /* border: dotted 1px gray; */
-/* } */
 .postpic{
     margin-left: 30px;
-    width: 27%;
+    width: 30%;
     border-radius: .5rem;
 }
 

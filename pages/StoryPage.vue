@@ -66,8 +66,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
 .container1 {
     width: 70%;
     margin-inline: auto;
-    margin-top: 6rem;
-    min-height: 72vh;
+    padding-block: 7.5vh;
 }
 
 .title {

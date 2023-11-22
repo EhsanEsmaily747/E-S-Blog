@@ -14,9 +14,6 @@
         <div class="post" @click="navigateTo(`/PostPage-${post._id}`)">
     
                         <div class="postbody">
-                            <!-- <div class="flexpro">
-                                <img class="postprofile" :src="post.pProfile" alt="profilepic" ><span class="author">{{ post.pWriter }}</span>
-                            </div> -->
                                 <p class="title">{{post.title}}</p>
                                 <p class="desc">{{ post.content }}</p>
                         </div>

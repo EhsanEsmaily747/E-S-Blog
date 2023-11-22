@@ -1,5 +1,5 @@
 <script setup>
-
+const {singOut}=useAuth()
 definePageMeta({
         middleware:'auth'
     })

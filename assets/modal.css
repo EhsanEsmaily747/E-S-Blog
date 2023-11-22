@@ -12,16 +12,17 @@
 }
     .ModalContainer{
     font-size: 18px;
+    background: white;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    top: 15vh;
+    right: 2vw;
+    /* transform: translate(-50%,-50%); */
     overflow: hidden;
     transition: transform .4s ease-in-out;
     z-index: 40;
     width: 330px;
     height: 450px;
-    background: transparent;
+    /* background: transparent; */
     backdrop-filter: blur(40px);
     box-shadow: 0 2px 10px gray;
     border-radius: 20px;

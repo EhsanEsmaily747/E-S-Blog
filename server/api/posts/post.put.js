@@ -13,7 +13,9 @@ export default defineEventHandler(async(event)=>{
             post.content = updatedPost.content;
             post.picture = updatedPost.picture;
             post.author = updatedPost.author;
-            post.categories = updatedPost.categories;
+            post.category = updatedPost.category;
+            post.likes=updatedPost.likes;
+            post.comments=updatedPost.comments
           post.save();
         }
         return 'Post Updated'

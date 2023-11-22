@@ -3,9 +3,6 @@
         cat:Object
     })
 
-const route= useRoute()
-
-
 </script>
 
 

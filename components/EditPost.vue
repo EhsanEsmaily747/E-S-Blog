@@ -44,7 +44,7 @@ const savePost = async () => {
             refreshData(updatedPost)
         
             try {
-                const res=await useFetch(`/api/posts/post?id=${props.post._id}`,{
+                await useFetch(`/api/posts/post?id=${props.post._id}`,{
                     method:'PUT',
                     body:{
                         updatedPost

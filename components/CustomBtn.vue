@@ -20,6 +20,9 @@
 
 
 .btn{
+    height:fit-content;
+    width: fit-content;
+    box-sizing: border-box;
     position: relative;
     font-size: 15px;
     border: none;

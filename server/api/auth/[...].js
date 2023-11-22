@@ -23,10 +23,12 @@ export default NuxtAuthHandler({
 
         // const data = await $fetch(`/api/users/user?username=${credentials.username}`)
         // Any object returned will be saved in `user` property of the JWT
-        const user={
-          name:{
-            id:credentials.id,
-            isAdmin:credentials.isAdmin
+        const user = {
+          name: {
+            id: credentials.id,
+            isAdmin: credentials.isAdmin,
+            pic: credentials.pic,
+            name: credentials.name
           }
         }
         return user

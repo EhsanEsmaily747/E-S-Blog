@@ -4,27 +4,24 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   let filter = {};
 
-  if (query) {
-    if (query.searchTerm) {
-      let regex = new RegExp(query.searchTerm, "i");
-      filter.$or = [{ title: regex }, { subtitle: regex }];
-    }
+
+  if (query.searchTerm) {
+    let regex = new RegExp(query.searchTerm, "i");
+    filter.$or = [{ title: regex }, { subtitle: regex }];
+  }
+  if (query.id) filter._id = query.id
+  if (query.name) filter.author=query.name  
+
+  let posts = await Post.find(filter)
+    .populate("author")
+    .populate("category")
+    .populate("comments")
+    .exec();
+
+  // console.log('posts' + posts);
+  return {
+    posts
   }
 
-  try {
-    let posts = await Post.find(filter)
-      .populate("author")
-      .populate("category")
-      .exec();
-
-    return {
-      posts,
-    };
-  } catch (error) {
-    return error;
-  }
-});
-
-//       if (req.query.mostview) sorts.mostview = { mostview: -1 }
-//       if (req.query.mostview) sorts.lessview = { mostview: 1 }
-  
+}
+)

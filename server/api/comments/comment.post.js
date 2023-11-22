@@ -1,23 +1,21 @@
-import Comment from "~/server/models/comment";
-import User from "~/server/models/user";
 
+import Comment from "~/server/models/comment";
 export default defineEventHandler(async(event)=>{
 
-    const {postId,content,author}=await readBody(event)
+    const {newCmt}=await readBody(event)
 
-    const user = await User.find({ author: author });
-    if (user) {
+    // const user = await User.find({ author: newCmt.author });
+    console.log(newCmt);
+    
         const newComment = await Comment.create({
-                    content: content,
-                    author: author,
-                    postId: postId
+                    content: newCmt.content,
+                    author: newCmt.author,
+                    postId: newCmt.postId
                   });
         
         return {
             newComment
         }
-    }
-    return `You can't comment on this post`
 })
 
 

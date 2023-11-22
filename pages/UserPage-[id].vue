@@ -14,7 +14,7 @@
 
 const data=await useFetch(`/api/posts/post?name=${route.params.id}`)
 const posts=ref(toRaw(data.data.value.posts))
-
+console.log(posts);
 
 const user = await useFetch(`/api/users/user?id=${route.params.id}`)
 userInfo.value = toRaw(user.data.value[0])

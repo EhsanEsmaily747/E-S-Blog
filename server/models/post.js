@@ -1,5 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
+
 const postSchema = new Schema(
   {
     title: {
@@ -17,20 +18,21 @@ const postSchema = new Schema(
     picture: {
       type: String,
     },
-    likes: {
-      type: Number,
-    },
-    comments:[{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'Comment'
-    }],
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    category:{
-      type:mongoose.Schema.Types.ObjectId ,
-      ref:'Category'
+    likes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    comments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }],
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category'
     }
   },
   { timestamps: true }
