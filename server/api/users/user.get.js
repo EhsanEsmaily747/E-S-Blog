@@ -5,6 +5,11 @@ export default defineEventHandler(async( event)=>{
     const query=getQuery(event)
     const filter={}
 
+    if (query.searchTerm) {
+        let regex = new RegExp(query.searchTerm, "i");
+        filter.$or = [{ username: regex }];
+      }
+
     if(query.id)filter._id=query.id
     if(query.username)filter.username=query.username
     if(query.email)filter.email=query.email

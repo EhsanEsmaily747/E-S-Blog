@@ -1,10 +1,16 @@
+<script setup>
+    const props = defineProps({
+        user:Object
+    })
+</script>
+
 <template>
     <div>
         <div class="user">
                 <Icon class="delete" name="material-symbols:delete-outline" ></Icon>
-                <img src="@/man.jpg" alt="">
-                <p class="userName">Ehsan Esmaily</p>
-                <p class="email">ehsanesmaily747@gmail.com</p>
+                <img :src="user.picture" alt="">
+                <p class="userName">{{ user.username }}</p>
+                <p class="email">{{ user.email }}</p>
 
             </div>
     </div>
@@ -12,11 +18,14 @@
 
 <style scoped>
     .user{
+    width: 220px;
+    height: 220px;
+    box-sizing: border-box;
     margin: 1em;
     position: relative;
     padding: .8rem;
     border-radius: .5rem;
-    width: fit-content;
+    /* width: fit-content; */
     box-shadow: 0 10px 12px gray;
     /* background: lightblue; */
     display: flex;

@@ -38,7 +38,9 @@ const savePost = async () => {
                 author : props.id,
                 content : props.post.content,
                 picture : props.post.picture,
-                category : props.post.category
+                category : props.post.category,
+                likes: props.post.likes,
+                comments: props.post.comments
             }
             props.post.editing=false
             refreshData(updatedPost)
@@ -70,7 +72,9 @@ const savePost = async () => {
                 author : props.id,
                 content : props.post.content,
                 picture : file.value?url.value:'/bg.jpg',
-                category : props.post.category
+                category : props.post.category,
+                likes: [],
+                comments: []
             }
             
             

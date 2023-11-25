@@ -22,13 +22,19 @@
                 }
             })
             
-            const rawdata=toRaw(register.data.value)
+            const data=toRaw(register.data.value)
             
 
             if (typeof register.data.value ==='string') {
                 alert('User Exist')
                 User.value.email=User.value.username=User.value.password=''
             }else{
+                const id = data._id
+                const isAdmin = data.isAdmin
+                const pic = data.picture
+                const name = data.username
+            await signIn('credentials', { id, isAdmin, pic, name , redirect: false })
+            
                 navigateTo(`/User/Profile-${rawdata.newUser._id}`)
             }
         }

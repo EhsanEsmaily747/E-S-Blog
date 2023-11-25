@@ -37,7 +37,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
         <Hero></Hero>
         <div class="downside">
             <div class="postPart">
-                <h2>Most View :</h2>
+                <h2>Latest Added :</h2>
                 <div class="posts">
                     <Post v-for="post in posts" :post="post" :showDelete="'false'"></Post>
 
@@ -50,7 +50,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
                     <h2>Categories :</h2>
 
                     <div class="cates" style="justify-content: flex-start; flex-wrap: wrap;">
-                        <Category v-for="cat in cats" :cat="cat" />
+                        <Category v-for="cat in cats" :cat="cat" @click="navigateTo(`/SearchPage?cat=${cat._id}`)"/>
                     </div>
                     <NuxtLink class="searchpagebtn" to="/SearchPage">Search More ...</NuxtLink>
                 </div>

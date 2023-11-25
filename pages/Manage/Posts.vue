@@ -1,69 +1,78 @@
 <script setup>
-     definePageMeta({
-        middleware:'auth'
-    })
-
-    const post={
-        pProfile:"/man.jpg",
-        pWriter:"Brad Hussey",
-        pTitle:"SunShine Rainbow",
-        pContent:`I was 17 when I first read The Fig Tree. I was just about to graduate school and 
-                begin my life. My mind was overflowing with ideas, countries, and careers I wanted 
-                to pursue. But the overwhelm of choosing hadn’t yet kicked in. I was spinning 
-                around in possibilities, like a giddy child on Christmas day examining unopened 
-                presents.<br>
-                
-                And then I read this poem. And I stopped spinning. I sat down and read it again. And 
-                again. I had never heard of Sylvia Plath before. How could she have written such a 
-                relatable story? The muscles on my shoulders tensed as I realized that I would 
-                indeed have to choose something. One day.<br><br>
-                
-                “I saw my life branching out before me like the green fig tree in the story. From the 
-                tip of every branch, like a fat purple fig, a wonderful future beckoned and winked. 
-                One fig was a husband and a happy home and children, and another fig was a 
-                famous poet, and another fig was a brilliant professor, and another fig was Ee Gee, 
-                the amazing editor, and another fig was Europe and Africa and South America, and 
-                another fig was Constantin and Socrates and Attila and a pack of other lovers with 
-                queer names and offbeat professions, and another fig was an Olympic lady crew 
-                champion, and beyond and above these figs were many more figs I couldn’t quite 
-                make out. I saw myself sitting in the crotch of this fig tree, starving to death, just 
-                because I couldn’t make up my mind which of the figs I would choose. I wanted 
-                each and every one of them, but choosing one meant losing all the rest, and as I sat 
-                there, unable to decide, the figs began to wrinkle and go black, and, one by one, they 
-                plopped to the ground at my feet.”
-                
-                ― Sylvia Plath, The Bell Jar`,
-        pImage:"/benz.jpg",
+definePageMeta({
+    middleware: 'auth'
+})
+let posts = ref({})
+const searchInput = ref('')
+const handleSearch = async () => {
+    if (searchInput.value.length > 1) {
+        const postData = await useFetch(`/api/posts/post?searchTerm=${searchInput.value}`)
+        posts.value = toRaw(postData.data.value.posts)
+        // console.log(posts.value);
     }
+}
+const handleDelete = (id) => {
+    const index = posts.value.findIndex((post)=>{
+        return post._id==id
+    })
+    posts.value.splice(index,1)
+}
+
 </script>
 
 <template>
     <div>
-        <AdminNav/>
+        <AdminNav />
         <div class="container">
-            <Search placeholder="Search By Title....."/>
-            <div class="posts" >
-                <Post :post="post" showDelete='true'/>
-                <Post :post="post" showDelete='true'/>
-                <Post :post="post" showDelete='true'/>
-                <Post :post="post" showDelete='true'/>
-                
+            <div class="searchBar">
+                <input type="search" class="search" v-model="searchInput" @keydown="handleSearch"
+                    placeholder="Search By Title">
+            </div>
+
+            <div class="posts">
+                <Post v-for="post in posts" :post="post" :show-delete="'true'" @handle-delete="handleDelete" />
             </div>
         </div>
-        <Footer/>
+        <Footer />
     </div>
 </template>
 
 
 <style scoped>
-.posts{
+.searchBar {
+    margin-top: -15px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.search {
+    width: 60%;
+    padding: .7rem 1rem;
+    border-radius: 1rem;
+    border: solid 1px lightgray;
+    box-shadow: 0 0 2px gray;
+    transition: all 100ms ease-in-out;
+    outline: none;
+    font-size: 1em;
+}
+
+.search:focus {
+    box-shadow: 0 0 2px lightblue;
+    border-color: lightblue;
+}
+
+.posts {
+    margin-inline: auto;
+    /* background: #000; */
+    width: 85%;
     margin-top: 3em;
     display: flex;
     justify-content: center;
-    flex-flow: wrap;
+    flex-wrap: wrap;
 }
 
-.container{
+.container {
     width: 70%;
     margin-inline: auto;
     margin-top: 5rem;

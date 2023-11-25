@@ -25,6 +25,7 @@ const LoginUser = async (event) => {
             const pic = data.picture
             const name = data.username
             await signIn('credentials', { id, isAdmin, pic, name , redirect: false })
+            
 
             if (data.isAdmin) {
                 navigateTo(`/AdminPanel`)

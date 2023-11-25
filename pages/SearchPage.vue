@@ -1,14 +1,34 @@
 <script setup>
 const { status, getSession } = useAuth()
 const userData = await getSession()
-
+const route = useRoute()
+const words = route.href.split('=')
+const category = words[1]
 
 const { loginopener, signupopener, showLogin, showSign } = useModal()
-
 const data = await useFetch('/api/categories/category')
 let cats = ref(toRaw(data.data.value.cats))
+let posts=ref({})
 
+if(category){
+  const data = await useFetch(`/api/posts/post?category=${category}`)
+  posts.value = toRaw(data.data.value.posts)
+}
 
+const handleCatSearch = async (id) => {
+    const data = await useFetch(`/api/posts/post?category=${id}`)
+    posts.value = toRaw(data.data.value.posts)
+}
+
+const searchInput=ref('')
+
+const handleSearch = async () =>{
+    if(searchInput.value.length > 1){
+        const postData = await useFetch(`/api/posts/post?searchTerm=${searchInput.value}`)
+        posts.value = toRaw(postData.data.value.posts)
+        // console.log(posts.value);
+    }
+}
 </script>
 
 
@@ -29,29 +49,28 @@ let cats = ref(toRaw(data.data.value.cats))
 
 
         <div class="cates m-block" style="justify-content: center;">
-            <Category v-for="cat in cats" :cat="cat"/>
+            <Category v-for="cat in cats" :cat="cat" @click="handleCatSearch(cat._id)"/>
         </div>
         
         <div class="searchBar">
-            <input type="search" class="search" placeholder="Search By Title">
+            <input type="search" class="search" v-model="searchInput" @keydown="handleSearch" placeholder="Search By Title">
         </div>
 
-        <div class="posts m-block">
-
+        <div class="posts m-block" >
+            <Post v-for="post in posts" :post="post" />
         </div>
         <Footer/>
     </div>
 </template>
 
 <style src="../assets/transition.css"></style>
-
 <style scoped>
+
 
 .cates{
     padding-inline: 20px;
     display: flex;
     width: 70vw;
-    /* flex-wrap: wrap; */
     overflow-x: scroll;
     margin-inline: auto;
 }
@@ -60,6 +79,7 @@ let cats = ref(toRaw(data.data.value.cats))
 }
 
 .searchBar{
+    margin-top: -15px;
     display: flex;
     justify-content: center;
     
@@ -89,6 +109,6 @@ let cats = ref(toRaw(data.data.value.cats))
     width: 70%;
     margin-inline: auto;
     justify-content: center;
-    min-height: 54vh;
+    min-height: 54dvh;
 }
 </style>

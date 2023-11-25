@@ -1,11 +1,10 @@
 <script setup>
-const {singOut}=useAuth()
+const {singOut, getSession ,status}=useAuth()
 definePageMeta({
         middleware:'auth'
     })
 
     
-const {getSession}=useAuth()
 const userData=await getSession()
 const route = useRoute()
 const data=await useFetch(`/api/posts/post?name=${route.params.id}`)
@@ -44,7 +43,8 @@ const handleDelete=(id)=>{
 </script>
 <template>
     <div>
-        <UserNav :id="userData.user.name.id"/>
+        <AdminNav v-if="userData.user.name.isAdmin"/>
+        <UserNav v-else :id="userData.user.name.id"/>
         <div class="Container">
 
             <EditPost :post="editPost" :id="$route.params.id"  @post-add="addPost"/>
