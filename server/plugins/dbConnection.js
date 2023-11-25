@@ -4,7 +4,7 @@ export default async()=>{
     const config=useRuntimeConfig()
 
     try {
-        await mongoose.connect(config.mongodbUri,{
+        await mongoose.connect(process.env.MONGODB_URI,{
             useNewUrlParser: true,
             useUnifiedTopology: true,
           })

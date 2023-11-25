@@ -15,8 +15,8 @@ export default defineNuxtConfig({
 
     runtimeConfig:{
       mongodbUri:process.env.MONGODB_URI
-    }
-    ,
+    },
+
     supabase:{
       
       redirect:false,
