@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    middleware: 'auth'
+    middleware: 'authen'
 })
 let posts = ref({})
 const searchInput = ref('')

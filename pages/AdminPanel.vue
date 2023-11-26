@@ -2,7 +2,7 @@
 const { getSession } = useAuth()
 const dataSession = await getSession()
 definePageMeta({
-    middleware: 'auth'
+    middleware: 'authen'
 })
 
 const users = await useFetch('/api/users/getAll')

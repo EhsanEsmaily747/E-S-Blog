@@ -3,6 +3,13 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' }
   },
+  
+  auth:{
+    provider:{
+      type: 'authjs'
+    }
+  },
+
   devtools: { enabled: true },
   modules:
     [
@@ -12,7 +19,7 @@ export default defineNuxtConfig({
       '@sidebase/nuxt-auth'
 
     ],
-
+    
     runtimeConfig:{
       mongodbUri:process.env.MONGODB_URI
     },

@@ -1,7 +1,7 @@
 <script setup>
-const {singOut, getSession ,status}=useAuth()
+const { getSession }=useAuth()
 definePageMeta({
-        middleware:'auth'
+        middleware:'authen'
     })
 
     

@@ -2,7 +2,7 @@
 <script setup>
 
      definePageMeta({
-        middleware:'auth'
+        middleware:'authen'
     })
     const {getSession}=useAuth()
     const dataSession=await getSession()
