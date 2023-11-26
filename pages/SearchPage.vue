@@ -59,7 +59,6 @@ const handleSearch = async () =>{
         <div class="posts m-block" >
             <Post v-for="post in posts" :post="post" />
         </div>
-        <Footer/>
     </div>
 </template>
 

@@ -33,7 +33,6 @@ const handleDelete = (id) => {
                 <Post v-for="post in posts" :post="post" :show-delete="'true'" @handle-delete="handleDelete" />
             </div>
         </div>
-        <Footer />
     </div>
 </template>
 

@@ -204,7 +204,6 @@ const handleDelete = async (data) => {
 
         </div>
 
-        <Footer />
     </div>
 </template>
 

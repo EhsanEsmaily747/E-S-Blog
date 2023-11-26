@@ -109,7 +109,6 @@ const handCategory = async (cat) => {
             </div>
         </div>
 
-        <Footer />
     </div>
 </template>
 

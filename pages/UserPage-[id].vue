@@ -44,7 +44,6 @@ userInfo.value = toRaw(user.data.value[0])
                 </div>
             </div>
         </div>
-        <Footer></Footer>
     </div>
 </template>
 

@@ -54,7 +54,6 @@ const handleDelete=(id)=>{
                 
             </div>
         </div>
-        <Footer/>
     </div>
 </template>
 

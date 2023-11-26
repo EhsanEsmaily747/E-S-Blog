@@ -23,7 +23,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
         <!-- <button @click="useFetch('/api/posts/fake')">addposts</button> -->
 
         <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <!-- <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id"></UserNav> -->
+        <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id"></UserNav>
         <AdminNav v-else />
 
         <transition name="fade">
@@ -56,7 +56,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
                 </div>
             </div>
         </div>
-        <Footer />
+        <!-- <Footer /> -->
 
     </div>
 </template>

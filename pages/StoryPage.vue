@@ -56,7 +56,6 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
                 fosters meaningful connections, and promotes positive change.
             </p>
         </div>
-        <Footer></Footer>
     </div>
 </template>
 

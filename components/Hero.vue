@@ -32,7 +32,7 @@
     .container{
     justify-content: space-between;
     position: relative;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     display: flex;
     width: 70%;
     margin-inline: auto;
