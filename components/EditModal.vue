@@ -42,7 +42,7 @@
         }
         emit('refresh-data',updatedUser)
         
-        const res=await useFetch(`/api/users/user?id=${updatedUser._id}`,{
+        await useFetch(`/api/users/user?id=${updatedUser._id}`,{
             method:'PUT',
             body:{
                 updatedUser

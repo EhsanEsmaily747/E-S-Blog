@@ -1,13 +1,13 @@
 <script setup>
-const { status, getSession } = useAuth()
-const userData = await getSession()
+const { status, data } = useAuth()
+// const userData = await getSession()
 const route = useRoute()
 const words = route.href.split('=')
 const category = words[1]
 
 const { loginopener, signupopener, showLogin, showSign } = useModal()
-const data = await useFetch('/api/categories/category')
-let cats = ref(toRaw(data.data.value.cats))
+const catsData = await useFetch('/api/categories/category')
+let cats = ref(toRaw(catsData.data.value.cats))
 let posts=ref({})
 
 if(category){
@@ -36,7 +36,7 @@ const handleSearch = async () =>{
 <template>
     <div>
         <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if="userData.user.name.isAdmin=='false'" :id="userData.user.name.id"></UserNav>
+        <UserNav v-else-if="data.user.name.isAdmin=='false'" :id="data.user.name.id"></UserNav>
         <AdminNav v-else />
 
         <transition name="fade">

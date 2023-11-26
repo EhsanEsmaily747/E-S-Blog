@@ -1,6 +1,6 @@
 <script setup>
-const { getSession } = useAuth()
-const dataSession = await getSession()
+const { data } = useAuth()
+// const dataSession = await getSession()
 definePageMeta({
     middleware: 'authen'
 })
@@ -20,7 +20,7 @@ const AddCategory = async () => {
 
     } else {
         const name = newCat.value
-        const newcate = await useFetch('/api/categories/category', {
+        await useFetch('/api/categories/category', {
             method: 'POST',
             body: {
                 name
@@ -82,7 +82,7 @@ const handCategory = async (cat) => {
                         <Icon class="icon" name="material-symbols:folder-managed-outline-rounded" />
                         Manage Posts
                     </div>
-                    <div class="box" @click="navigateTo(`/User/EditPost-${dataSession.user.name.id}`)">
+                    <div class="box" @click="navigateTo(`/User/EditPost-${data.user.name.id}`)">
                         <Icon class="icon" name="material-symbols:add-box-outline-rounded" />
                         Create Posts
                     </div>

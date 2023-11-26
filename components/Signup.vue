@@ -1,5 +1,7 @@
 <script setup>
 
+const { signIn } = useAuth()
+
     const User=ref({
         username:'',
         email:'',
@@ -35,7 +37,7 @@
                 const name = data.username
             await signIn('credentials', { id, isAdmin, pic, name , redirect: false })
             
-                navigateTo(`/User/Profile-${rawdata.newUser._id}`)
+                navigateTo(`/User/Profile-${id}`)
             }
         }
     

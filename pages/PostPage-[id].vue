@@ -1,13 +1,13 @@
 <script setup>
 const route = useRoute()
-const { status, getSession } = useAuth()
+const { status, data } = useAuth()
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 const postData = await useFetch(`/api/posts/post?id=${route.params.id}`)
 const post = toRaw(postData.data.value).posts[0]
 const commentData = await useFetch(`/api/comments/comment?id=${post._id}`)
 const cmts = toRaw(commentData.data.value).comments
-let sessionData = await getSession()
+// let sessionData = await getSession()
 
 console.log(cmts);
 
@@ -24,7 +24,7 @@ const postInfo = ref({
 
 
 if (status.value == 'authenticated') {
-    post.likes.includes(sessionData.user.name.id) ? like.value = true : like.value = false
+    post.likes.includes(data.value.user.name.id) ? like.value = true : like.value = false
 }
 
 const handleLike = async () => {
@@ -33,12 +33,12 @@ const handleLike = async () => {
         if (like.value) {
             postInfo.value.likes--
             like.value = false
-            const index = post.likes.indexOf(sessionData.user.name.id)
+            const index = post.likes.indexOf(data.value.user.name.id)
             post.likes.splice(index, 1)
         } else {
             postInfo.value.likes++
             like.value = true
-            post.likes.push(sessionData.user.name.id)
+            post.likes.push(data.value.user.name.id)
         }
 
         updatedPost = post
@@ -86,7 +86,7 @@ const addComment = async () => {
 
         let newCmt = {
             content: comment.value,
-            author: sessionData.user.name.id,
+            author: data.value.user.name.id,
             postId: route.params.id
         }
         const res = await useFetch('/api/comments/comment', {
@@ -99,9 +99,9 @@ const addComment = async () => {
         // console.log(createdComment);
         const newComment = {
             author: {
-                _id: sessionData.user.name.id,
-                username: sessionData.user.name.name,
-                picture: sessionData.user.name.pic
+                _id: data.value.user.name.id,
+                username: data.value.user.name.name,
+                picture: data.value.user.name.pic
             },
             _id: createdComment._id,
             content: comment.value
@@ -149,7 +149,7 @@ const handleDelete = async (data) => {
     <div>
 
         <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if="sessionData.user.name.isAdmin == 'false'" :id="sessionData.user.name.id" />
+        <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id" />
         <AdminNav v-else />
 
         <transition name="fade">
@@ -189,7 +189,7 @@ const handleDelete = async (data) => {
                 <div v-if="showCmt" style="margin-bottom: 1rem;">
 
                     <section class="comment">
-                        <Comment v-for="comment in comments" :data="comment" :user="sessionData.user.name.id"
+                        <Comment v-for="comment in comments" :data="comment" :user="data.user.name.id"
                             @deleteCmt="handleDelete" />
                     </section>
 

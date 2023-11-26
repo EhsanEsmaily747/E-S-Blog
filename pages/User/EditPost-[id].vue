@@ -1,14 +1,14 @@
 <script setup>
-const { getSession }=useAuth()
+const { data }=useAuth()
 definePageMeta({
         middleware:'authen'
     })
 
     
-const userData=await getSession()
+// const userData=await getSession()
 const route = useRoute()
-const data=await useFetch(`/api/posts/post?name=${route.params.id}`)
-const posts=ref(toRaw(data.data.value.posts))
+const postData=await useFetch(`/api/posts/post?name=${route.params.id}`)
+const posts=ref(toRaw(postData.data.value.posts))
     
 const editPost = ref({
     title: '',
@@ -43,8 +43,8 @@ const handleDelete=(id)=>{
 </script>
 <template>
     <div>
-        <AdminNav v-if="userData.user.name.isAdmin"/>
-        <UserNav v-else :id="userData.user.name.id"/>
+        <AdminNav v-if="data.user.name.isAdmin"/>
+        <UserNav v-else :id="data.user.name.id"/>
         <div class="Container">
 
             <EditPost :post="editPost" :id="$route.params.id"  @post-add="addPost"/>

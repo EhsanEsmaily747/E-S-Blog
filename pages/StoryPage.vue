@@ -2,8 +2,8 @@
 
 
 
-const { status, getSession } = useAuth()
-const data = await getSession()
+const { status, data } = useAuth()
+// const data = await getSession()
 console.log(data);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 </script>

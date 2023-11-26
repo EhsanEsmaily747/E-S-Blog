@@ -1,8 +1,7 @@
 
 <script setup>
 
-const { status, getSession } = useAuth()
-const data = await getSession()
+const { status, data } = useAuth()
 const Categories = await useFetch('/api/categories/category')
 let cats = ref(toRaw(Categories.data.value.cats))
 
@@ -11,7 +10,7 @@ const posts=toRaw(postsRaw.data.value)
 // console.log(posts);
 // const posts = await 
 
-console.log(data);
+console.log(data.value.user.name.id);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 

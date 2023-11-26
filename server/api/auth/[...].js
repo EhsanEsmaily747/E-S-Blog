@@ -28,7 +28,8 @@ export default NuxtAuthHandler({
             id: credentials.id,
             isAdmin: credentials.isAdmin,
             pic: credentials.pic,
-            name: credentials.name
+            name: credentials.name,
+            email: credentials.email
           }
         }
         return user
