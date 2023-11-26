@@ -8,13 +8,13 @@ import { NuxtAuthHandler } from '#auth'
 
 export default NuxtAuthHandler({
   // A secret string you define, to ensure correct encryption
-  secret: 'your-secret-here',
+  secret: process.env.SECRET_KEY,
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     CredentialsProvider.default({
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: 'Credentials',
-
+      
       async authorize(credentials) {
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
