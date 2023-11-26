@@ -1,16 +1,16 @@
 
 <script setup>
-
+const headers = useRequestHeaders(['cookie']) 
 const { status, data } = useAuth()
-const Categories = await useFetch('/api/categories/category')
+const Categories = await useFetch('/api/categories/category', {headers})
 let cats = ref(toRaw(Categories.data.value.cats))
 
-const postsRaw = await useFetch('/api/posts/latest')
+const postsRaw = await useFetch('/api/posts/latest',{headers})
 const posts=toRaw(postsRaw.data.value)
 // console.log(posts);
 // const posts = await 
 // console.log(status);
-console.log(data.value.status);
+console.log(data);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 
@@ -22,8 +22,8 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
     <div>
         <!-- <button @click="useFetch('/api/posts/fake')">addposts</button> -->
 
-        <NavBar v-if="data.status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id"></UserNav>
+        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
+        <!-- <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id"></UserNav> -->
         <AdminNav v-else />
 
         <transition name="fade">
