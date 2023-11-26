@@ -11,6 +11,7 @@ const posts=toRaw(postsRaw.data.value)
 // console.log(posts);
 // const posts = await 
 
+console.log(data);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 
