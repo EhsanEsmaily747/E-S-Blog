@@ -9,8 +9,8 @@ const postsRaw = await useFetch('/api/posts/latest')
 const posts=toRaw(postsRaw.data.value)
 // console.log(posts);
 // const posts = await 
-
-console.log(data.value.user.name.id);
+// console.log(status);
+console.log(data.value.status);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 
@@ -22,7 +22,7 @@ const { loginopener, signupopener, showLogin, showSign } = useModal()
     <div>
         <!-- <button @click="useFetch('/api/posts/fake')">addposts</button> -->
 
-        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
+        <NavBar v-if="data.status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
         <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id"></UserNav>
         <AdminNav v-else />
 
