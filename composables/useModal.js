@@ -4,12 +4,12 @@ export const useModal=()=>{
     let showEditModal=ref(false);
 
     function loginopener(){
-        this.showLogin=true;
-        this.showSign=false;
+        showLogin.value=true;
+        showSign.value=false;
     }
     function signupopener() {
-        this.showSign=true;
-        this.showLogin=false;
+        showSign.value=true;
+        showLogin.value=false;
     }
 
     return{
