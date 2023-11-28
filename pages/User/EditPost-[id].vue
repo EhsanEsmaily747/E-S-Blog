@@ -1,11 +1,18 @@
 <script setup>
-const { data }=useAuth()
+let data = ref({})
+const { decode , getToken } = useAuth()
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if(token.value){
+        data.value=decode(token.value)
+    }
+})
 definePageMeta({
         middleware:'authen'
     })
 
     
-// const userData=await getSession()
 const route = useRoute()
 const postData=await useFetch(`/api/posts/post?name=${route.params.id}`)
 const posts=ref(toRaw(postData.data.value.posts))
@@ -43,8 +50,8 @@ const handleDelete=(id)=>{
 </script>
 <template>
     <div>
-        <AdminNav v-if="data.user.name.isAdmin"/>
-        <UserNav v-else :id="data.user.name.id"/>
+        <AdminNav v-if="data.isAdmin"></AdminNav>
+        <UserNav v-else :id="data.id"></UserNav>
         <div class="Container">
 
             <EditPost :post="editPost" :id="$route.params.id"  @post-add="addPost"/>

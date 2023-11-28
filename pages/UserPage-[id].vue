@@ -4,9 +4,15 @@
      definePageMeta({
         middleware:'authen'
     })
-    const {data}=useAuth()
-    // const dataSession=await getSession()
-
+    let data = ref({})
+const { decode , getToken } = useAuth()
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if(token.value){
+        data.value=decode(token.value)
+    }
+})
 
     const route=useRoute()
 
@@ -14,18 +20,16 @@
 
 const postData=await useFetch(`/api/posts/post?name=${route.params.id}`)
 const posts=ref(toRaw(postData.data.value.posts))
-console.log(posts);
 
 const user = await useFetch(`/api/users/user?id=${route.params.id}`)
 userInfo.value = toRaw(user.data.value[0])
 
-    // console.log(post);
 </script>
 
 <template>
     <div>
-        <AdminNav v-if="data.user.name.isAdmin=='true'"></AdminNav>
-        <UserNav v-else :id="data.user.name.id"></UserNav>
+        <AdminNav v-if="data.isAdmin"></AdminNav>
+        <UserNav v-else :id="data.id"></UserNav>
         <div class="container">
             <div class="content">
                 <div class="">

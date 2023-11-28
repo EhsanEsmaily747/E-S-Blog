@@ -1,18 +1,23 @@
 <script setup>
 const route = useRoute()
-const { status, data } = useAuth()
+
+let data = ref({})
+const { decode, getToken } = useAuth()
+
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if (token.value) {
+        data.value = decode(token.value)
+    }
+})
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 const postData = await useFetch(`/api/posts/post?id=${route.params.id}`)
 const post = toRaw(postData.data.value).posts[0]
 const commentData = await useFetch(`/api/comments/comment?id=${post._id}`)
 const cmts = toRaw(commentData.data.value).comments
-// let sessionData = await getSession()
 
-console.log(cmts);
-
-// console.log(post);
-// console.log(data);
 
 const like = ref(false)
 const showCmt = ref(false)
@@ -23,124 +28,118 @@ const postInfo = ref({
 })
 
 
-if (status.value == 'authenticated') {
-    post.likes.includes(data.value.user.name.id) ? like.value = true : like.value = false
-}
+    if (token.value) {
+    post.likes.includes(data.value.id) ? like.value = true : like.value = false
 
-const handleLike = async () => {
-    if (status.value == 'authenticated') {
+    }
+    const handleLike = async () => {
+        if (token.value) {
 
-        if (like.value) {
-            postInfo.value.likes--
-            like.value = false
-            const index = post.likes.indexOf(data.value.user.name.id)
-            post.likes.splice(index, 1)
+            if (like.value) {
+                postInfo.value.likes--
+                like.value = false
+                const index = post.likes.indexOf(data.value.id)
+                post.likes.splice(index, 1)
+            } else {
+                postInfo.value.likes++
+                like.value = true
+                post.likes.push(data.value.id)
+            }
+
+            updatedPost = post
+            console.log(updatedPost);
+            await useFetch(`/api/posts/post?id=${post._id}`, {
+                method: 'PUT',
+                body: {
+                    updatedPost
+                }
+            })
         } else {
-            postInfo.value.likes++
-            like.value = true
-            post.likes.push(data.value.user.name.id)
+            alert('You must be Logged In')
+            showLogin.value = true
         }
-
-        updatedPost = post
-        console.log(updatedPost);
-        await useFetch(`/api/posts/post?id=${post._id}`, {
-            method: 'PUT',
-            body: {
-                updatedPost
-            }
-        })
-    } else {
-        alert('You must be Logged In')
-        showLogin.value = true
-    }
-}
-
-
-const showComments = () => {
-    if (status.value == 'authenticated') {
-        showCmt.value = !showCmt.value
-    }else{
-        alert('You must be Logged In')
-        showLogin.value = true
-    }
-}
-
-
-
-//                                              COMMENT SCRIPTS                                  //
-
-
-const comments = ref(cmts)
-// console.log(comments);
-// console.log(post);
-
-postInfo.value.comments = computed(() => {
-    return comments.value.length
-
-})
-const comment = ref('')
-
-const addComment = async () => {
-    if (status.value == 'authenticated') {
-
-
-        let newCmt = {
-            content: comment.value,
-            author: data.value.user.name.id,
-            postId: route.params.id
-        }
-        const res = await useFetch('/api/comments/comment', {
-            method: 'POST',
-            body: {
-                newCmt
-            }
-        })
-        const createdComment = toRaw(res.data.value).newComment
-        // console.log(createdComment);
-        const newComment = {
-            author: {
-                _id: data.value.user.name.id,
-                username: data.value.user.name.name,
-                picture: data.value.user.name.pic
-            },
-            _id: createdComment._id,
-            content: comment.value
-        }
-        comments.value.push(newComment)
-        
-        comment.value = ''
-        updatedPost = post
-        updatedPost.comments.pop()
-        updatedPost.comments.push(createdComment._id)
-
-        console.log(updatedPost.comments);
-        await useFetch(`/api/posts/post?id=${post._id}`, {
-            method: 'PUT',
-            body: {
-                updatedPost
-            },
-        }
-        )
-
-    } else {
-        alert('You must be logged in')
-        showLogin.value = true
     }
 
 
-}
+    const showComments = () => {
+        if (token.value) {
+            showCmt.value = !showCmt.value
+        } else {
+            alert('You must be Logged In')
+            showLogin.value = true
+        }
+    }
 
 
-const handleDelete = async (data) => {
-    const index = comments.value.findIndex((cmt) => {
-        return cmt.comment == data.comment
+
+    //                                              COMMENT SCRIPTS                                  //
+
+
+    const comments = ref(cmts)
+    
+    postInfo.value.comments = computed(() => {
+        return comments.value.length
+
     })
-    comments.value.splice(index, 1)
-    await useFetch(`/api/comments/comment?id=${data._id}`,{
-        method: 'DELETE'
-    })
-}
+    const comment = ref('')
 
+    const addComment = async () => {
+        if (token.value) {
+
+
+            let newCmt = {
+                content: comment.value,
+                author: data.value.id,
+                postId: route.params.id
+            }
+            const res = await useFetch('/api/comments/comment', {
+                method: 'POST',
+                body: {
+                    newCmt
+                }
+            })
+            const createdComment = toRaw(res.data.value).newComment
+            // console.log(createdComment);
+            const newComment = {
+                author: {
+                    _id: data.value.id,
+                    username: data.value.name,
+                    picture: data.value.pic
+                },
+                _id: createdComment._id,
+                content: comment.value
+            }
+            comments.value.push(newComment)
+
+            comment.value = ''
+            updatedPost = post
+            updatedPost.comments.pop()
+            updatedPost.comments.push(createdComment._id)
+
+            // console.log(updatedPost.comments);
+            await useFetch(`/api/posts/post?id=${post._id}`, {
+                method: 'PUT',
+                body: {
+                    updatedPost
+                },
+            }
+            )
+        } else {
+            alert('You must be logged in')
+            showLogin.value = true
+        }
+    }
+
+
+    const handleDelete = async (data) => {
+        const index = comments.value.findIndex((cmt) => {
+            return cmt.comment == data.comment
+        })
+        comments.value.splice(index, 1)
+        await useFetch(`/api/comments/comment?id=${data._id}`, {
+            method: 'DELETE'
+        })
+    }
 
 
 </script>
@@ -148,8 +147,8 @@ const handleDelete = async (data) => {
 <template>
     <div>
 
-        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if="data.user.name.isAdmin == 'false'" :id="data.user.name.id" />
+        <NavBar v-if="!token" @open-sign="signupopener()" @open-login="loginopener()" />
+        <UserNav v-else-if="!data.isAdmin" :id="data.id" @sign-out="token = false"></UserNav>
         <AdminNav v-else />
 
         <transition name="fade">
@@ -189,7 +188,7 @@ const handleDelete = async (data) => {
                 <div v-if="showCmt" style="margin-bottom: 1rem;">
 
                     <section class="comment">
-                        <Comment v-for="comment in comments" :data="comment" :user="data.user.name.id"
+                        <Comment v-for="comment in comments" :data="comment" :user="data.id"
                             @deleteCmt="handleDelete" />
                     </section>
 
@@ -209,25 +208,27 @@ const handleDelete = async (data) => {
 
 <style src="../assets/transition.css"></style>
 <style scoped>
-
-.drop-enter-active{
-  animation: bounce-in 0.4s;
+.drop-enter-active {
+    animation: bounce-in 0.4s;
 }
+
 .drop-leave-active {
-  animation: bounce-in 0.4s reverse;
+    animation: bounce-in 0.4s reverse;
 }
 
 @keyframes bounce-in {
-  0%{
-    transform: scaleY(0);
-  }
-  50%{
-    transform:  scaleY(.5);
-    
-  }
-  100%{
-    transform:  scaleY(1);
-  }
+    0% {
+        transform: scaleY(0);
+    }
+
+    50% {
+        transform: scaleY(.5);
+
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
 }
 
 

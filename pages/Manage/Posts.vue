@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-    middleware: 'authen'
+    middleware: 'admin'
 })
 let posts = ref({})
 const searchInput = ref('')
@@ -8,7 +8,6 @@ const handleSearch = async () => {
     if (searchInput.value.length > 1) {
         const postData = await useFetch(`/api/posts/post?searchTerm=${searchInput.value}`)
         posts.value = toRaw(postData.data.value.posts)
-        // console.log(posts.value);
     }
 }
 const handleDelete = (id) => {

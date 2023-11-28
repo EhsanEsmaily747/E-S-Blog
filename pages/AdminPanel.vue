@@ -1,10 +1,17 @@
 <script setup>
-const { data } = useAuth()
-// const dataSession = await getSession()
-definePageMeta({
-    middleware: 'authen'
+let data = ref({})
+const { decode , getToken } = useAuth()
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if(token.value){
+        data.value=decode(token.value)
+    }
 })
 
+definePageMeta({
+    middleware: 'admin'
+})
 const users = await useFetch('/api/users/getAll')
 const posts = await useFetch('/api/posts/getAll')
 const categories = await useFetch('/api/categories/category')
@@ -44,6 +51,7 @@ const handCategory = async (cat) => {
 }
 
 </script>
+
 <template>
     <div>
 

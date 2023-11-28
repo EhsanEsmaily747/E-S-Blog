@@ -28,13 +28,8 @@ const refresh = (user) => {
         userInfo.value.password=user.password
 }
 
-// console.log(userInfo);
-
-// console.log(typeof userInfo);
-
-
-// console.log(post);
 </script>
+
 
 <template>
     <div>

@@ -1,20 +1,25 @@
 <script setup>
+let data = ref({})
+const { decode , getToken } = useAuth()
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if(token.value){
+        data.value=decode(token.value)
+    }
+})
 
-
-
-const { status, data } = useAuth()
-// const data = await getSession()
-console.log(data);
 const { loginopener, signupopener, showLogin, showSign } = useModal()
+
 </script>
 
 
 <template>
     <div>
 
-        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if=" data.user.name.isAdmin=='false'" :id="data.user.name.id"></UserNav>
-        <AdminNav v-else/>
+        <NavBar v-if="!token" @open-sign="signupopener()" @open-login="loginopener()" />
+        <UserNav v-else-if="!data.isAdmin" :id="data.id" @sign-out="token=false"></UserNav>
+        <AdminNav v-else @sign-out="token=false" /> 
 
         <transition name="fade">
             <Login v-show="showLogin" @close-modal="showLogin = false" @open-register="signupopener()" />

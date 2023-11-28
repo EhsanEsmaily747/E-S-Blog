@@ -1,13 +1,20 @@
 <script setup>
-const { status, data } = useAuth()
-// const userData = await getSession()
+let data = ref({})
+const { decode , getToken } = useAuth()
+let token = ref('')
+onMounted(() => {
+    token.value = getToken()
+    if(token.value){
+        data.value=decode(token.value)
+    }
+})
 const route = useRoute()
 const words = route.href.split('=')
 const category = words[1]
 
 const { loginopener, signupopener, showLogin, showSign } = useModal()
-const catsData = await useFetch('/api/categories/category')
-let cats = ref(toRaw(catsData.data.value.cats))
+const catData = await useFetch('/api/categories/category')
+let cats = ref(toRaw(catData.data.value.cats))
 let posts=ref({})
 
 if(category){
@@ -26,18 +33,16 @@ const handleSearch = async () =>{
     if(searchInput.value.length > 1){
         const postData = await useFetch(`/api/posts/post?searchTerm=${searchInput.value}`)
         posts.value = toRaw(postData.data.value.posts)
-        // console.log(posts.value);
     }
 }
 </script>
 
 
-
 <template>
     <div>
-        <NavBar v-if="status == 'unauthenticated'" @open-sign="signupopener()" @open-login="loginopener()" />
-        <UserNav v-else-if="data.user.name.isAdmin=='false'" :id="data.user.name.id"></UserNav>
-        <AdminNav v-else />
+        <NavBar v-if="!token" @open-sign="signupopener()" @open-login="loginopener()" />
+        <UserNav v-else-if="!data.isAdmin" :id="data.id" @sign-out="token=false"></UserNav>
+        <AdminNav v-else @sign-out="token=false" /> 
 
         <transition name="fade">
             <Login v-show="showLogin" @close-modal="showLogin = false" @open-register="signupopener()" />

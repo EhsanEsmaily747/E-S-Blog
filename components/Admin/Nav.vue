@@ -1,5 +1,11 @@
 <script setup>
-    const{signOut}=useAuth()
+
+const emit=defineEmits(['sign-out'])
+    function handleLogOut(){
+        localStorage.removeItem('token')
+        emit('sign-out')
+    }
+
 </script>
 <template>
     <header>
@@ -9,9 +15,9 @@
         <ul class="navlist flex">
 
             <NuxtLink class="navItem" to="/">Home</NuxtLink >
-                <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink >
+            <NuxtLink class="navItem" to="/StoryPage">Our History</NuxtLink >
             <NuxtLink class="navItem" to="/AdminPanel">Admin Panel</NuxtLink>
-            <NuxtLink class="navItem" to="/" @click="signOut({redirect:false})" >Log Out <span><Icon class="logOut" name="material-symbols-light:logout"/></span></NuxtLink>
+            <NuxtLink class="navItem" to="/" @click="handleLogOut" >Log Out <span><Icon class="logOut" name="material-symbols-light:logout"/></span></NuxtLink>
         </ul>
         </div>
     </div>

@@ -1,5 +1,4 @@
 <script setup>
-    const {signOut}=useAuth
     const props=defineProps({
         id:String,
     })

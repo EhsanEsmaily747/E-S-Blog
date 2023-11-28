@@ -1,46 +1,44 @@
 <script setup>
 
-const { signIn } = useAuth()
+const { decode } = useAuth()
+
 
 const userUsername = ref('')
 const userPassword = ref('')
 
 const LoginUser = async (event) => {
     event.preventDefault();
-    const password = userPassword.value
-    const username = userUsername.value
 
-    let data = {}
-
-    const user = await useFetch(`/api/users/user?username=${username}`)
-    // console.log(user);
-    if (typeof user.data.value[0] === 'string') {
-        alert('User Does not exist')
-    } else if (user) {
-        data = toRaw(user.data.value[0])
-
-        if (data.password == password) {
-            const id = data._id
-            const isAdmin = data.isAdmin
-            const pic = data.picture
-            const name = data.username
-            await signIn('credentials', { id, isAdmin, pic, name , redirect: false })
-            
-
-            if (data.isAdmin) {
-                navigateTo(`/AdminPanel`)
-            } else {
-                navigateTo(`/User/Profile-${data._id}`)
-            }
-
-        } else {
-            alert('Wrong Password')
-        }
+    const userData = {
+        username:userUsername.value,
+        password:userPassword.value
     }
+    const {data} = await useFetch('api/users/login',{
+        method : 'POST' ,
+        body :{
+            userData
+        } 
+    })
+    if (data.value == 'Wrong Password') {
+        alert('Wrong Password')
+    }else if(data.value == 'Invalid Username'){
+        alert('Invalid Username')
+    }else{
+        const user = JSON.stringify(data.value)
+        localStorage.setItem('token',user)
+        
+        const userInfo = decode(user)
+        
+        if (userInfo.isAdmin) {
+            navigateTo('/AdminPanel')
+        }else{
+            navigateTo(`/User/Profile-${userInfo.id}`)
+        }
+
+    }
+    
 }
-
-</script>
-
+    </script>
 <template>
     <!-- LoginForm -->
 
@@ -65,12 +63,6 @@ const LoginUser = async (event) => {
                 </span>
             </div>
 
-            <!-- <div class="remember">
-                <div class="checkbox">
-                    <input type="checkbox"><label for="checkbox">Remember me</label>
-                </div>
-                <a href="" class="forgot-pass">Forgot Password ?</a>
-            </div> -->
 
             <button class="login-btn" @click="LoginUser">Login</button>
             <div class="register-part">

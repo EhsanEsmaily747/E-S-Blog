@@ -4,11 +4,6 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' }
   },
   
-  auth:{
-    provider:{
-      type: 'authjs'
-    }
-  },
 
   devtools: { enabled: true },
   modules:
@@ -16,7 +11,6 @@ export default defineNuxtConfig({
       'nuxt-icon',
       '@nuxtjs/supabase',
       '@vueuse/nuxt',
-      '@sidebase/nuxt-auth'
 
     ],
     
@@ -25,10 +19,7 @@ export default defineNuxtConfig({
     },
 
     supabase:{
-      
       redirect:false,
-      
-    
     }
 })
 

@@ -1,6 +1,6 @@
 <script setup>
     definePageMeta({
-        middleware:'authen'
+        middleware:'admin'
     })
 
     const searchInput = ref('')

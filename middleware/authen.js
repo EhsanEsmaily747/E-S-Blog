@@ -1,9 +1,14 @@
-export default defineNuxtRouteMiddleware((from,to)=>{
-    const {status}=useAuth()
-    if (status.value=='authenticated') {
+export default defineNuxtRouteMiddleware((from, to) => {
+    
+    const { getToken } = useAuth()
+    let token = ref('')
+        
+    token.value = getToken()
+    
+    if (token.value) {
         return
-    }else{
+    } else {
         return navigateTo('/')
     }
-    
+
 })
