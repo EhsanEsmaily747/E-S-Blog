@@ -229,7 +229,7 @@ const handCategory = async (cat) => {
     width: 80%;
     display: flex;
     flex-wrap: wrap;
-    Row-gap: 10px;
+    row-gap: 10px;
     justify-content: center;
     align-items: center;
     margin-inline: auto;

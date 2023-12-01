@@ -80,11 +80,13 @@ userInfo.value = toRaw(user.data.value[0])
 }
 
 
-.posts{
+.posts {
+    width: 70vw;
     margin-top: 3rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     text-align: left;
+    /* background: #000; */
 }
 </style>
