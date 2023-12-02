@@ -6,6 +6,10 @@ export default defineEventHandler(async(event)=>{
     const filter={}
     filter.postId=query.id
     
+    if (!query.id) {
+        return ''
+    }
+
     const comments=await Comment.find(filter).populate('author')
 
     return {

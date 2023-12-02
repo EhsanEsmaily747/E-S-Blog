@@ -1,5 +1,11 @@
 
 <script setup>
+
+useFetch('/api/categories/category')
+useFetch('/api/comments/comment')
+useFetch('/api/posts/getAll')
+useFetch('/api/users/getAll')
+
 let data = ref({})
 const { decode , getToken } = useAuth()
 let token = ref('')
