@@ -2,6 +2,8 @@
 const route = useRoute()
 
 let data = ref({})
+const like = ref(false)
+const showCmt = ref(false)
 const { decode, getToken } = useAuth()
 
 let token = ref('')
@@ -10,6 +12,10 @@ onMounted(() => {
     if (token.value) {
         data.value = decode(token.value)
     }
+    
+    console.log(data.value.id);
+    post.likes.includes(data.value.id) ? like.value = true : like.value = false
+    
 })
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
@@ -19,8 +25,6 @@ const commentData = await useFetch(`/api/comments/comment?id=${post._id}`)
 const cmts = toRaw(commentData.data.value).comments
 
 
-const like = ref(false)
-const showCmt = ref(false)
 let updatedPost = {}
 const postInfo = ref({
     likes: post.likes.length,
@@ -28,10 +32,7 @@ const postInfo = ref({
 })
 
 
-    if (token.value) {
-    post.likes.includes(data.value.id) ? like.value = true : like.value = false
 
-    }
     const handleLike = async () => {
         if (token.value) {
 
