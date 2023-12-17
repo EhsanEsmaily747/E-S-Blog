@@ -18,12 +18,20 @@ onMounted(() => {
     }
 })
 
-const Categories = await useFetch('/api/categories/category')
+// const Categories = await useFetch('/api/categories/category')
 
-let cats = ref(toRaw(Categories.data.value.cats))
+// let cats = ref(toRaw(Categories.data.value.cats))
 
-const postsRaw = await useFetch('/api/posts/latest')
-const posts=toRaw(postsRaw.data.value)
+// const postsRaw = await useFetch('/api/posts/latest')
+// const posts=toRaw(postsRaw.data.value)
+const Categories = await useFetch('http://api2.kdanish.com/api/v1/categories/')
+
+let cats = toRaw(Categories.data.value.list)
+const postsRaw = await useFetch('http://api2.kdanish.com/api/v1/posts/?latest=something')
+
+const posts=toRaw(postsRaw.data.value.posts)
+
+
 const { loginopener, signupopener, showLogin, showSign } = useModal()
 
 
